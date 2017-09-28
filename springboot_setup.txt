@@ -1,0 +1,35 @@
+Initial setup:
+-----------------
+- Let’s first start by opening http//start.spring.io.
+- You can use either Maven or Gradle to build, however we will use Maven.
+- Click on Switch to the full Version.
+
+- Select Maven Project.
+- If you want, change the Group/Package name. 
+- Change the Artifact to SpringBoot, Name will automatically change to the same
+- Leave the packaging to Jar, Java Version to 1.8 (Make sure you have JDK 1.8 in your local or use 1.7 )
+- Either type the Dependencies or select them below. We will add Web and Actuator here
+- Click on Generate Project button to download the zip file.
+
+- Now Extract the zip and you will have the following files.
+- Open Terminal and navigate to the “SpringBoot” folder. 
+- Type “mvn clean package” and press enter. The Build will start now.
+- Once the build has been completed, you will have the “SpringBoot-0.0.1-SNAPSHOT.jar” created inside the target folder.
+
+Create Spring Boot Application using Eclipse:
+-----------------------------------------------
+- We will use STS Toolkit to bootstrap when using eclipse.
+- We will first install the STS (SpringSource Tools Suite). Open Eclipse Marketplace, Type STS in Find and install the STS.
+- Change the perspective to “Spring”
+- Create a New -> Spring Starter Project.
+- Fill the details and click “next”
+- Select Web and Actuator. Click on Next.
+- Click “Finish”
+
+Run Spring Boot Application in Eclipse:
+-----------------------------------------------
+- Select the project, Right Click and, move to Run As and click on “Spring Boot App”.
+
+
+
+

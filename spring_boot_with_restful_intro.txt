@@ -1,0 +1,184 @@
+1. Add the Web as a dependency in our project. You can see the following being added in the pom file. 
+
+<dependency>
+   <groupId>org.springframework.boot</groupId>
+   <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+
+In case you want to add any additional features, you can add in the pom file directly and IntelliJ IDEA or Eclipse will automatically add the dependent jars.
+
+2. The @SpringBootApplication annotation is the starting point of Spring Boot application. We will initialize the application by calling the following line from our main method.
+
+@SpringBootApplication
+public class Application {
+   public static void main(String[] args) {
+      SpringApplication.run(Application.class, args);
+   }
+}
+
+3. Let’s create a Student Application where we can add/delete/view student data. We will use static variable to hold the data for our application. We will start by creating a Student class, then we will create a StudentService class and expose the methods there as REST service.
+
+public class Student {
+    private long id;
+    private String name;
+ 
+    public Student() {
+    }
+ 
+    public Student(String name, String subject) {
+        this.id = (new Date()).getTime();
+        this.name = name;
+        this.subject = subject;
+    }
+ 
+    private String subject;
+ 
+    public long getId() {
+        return id;
+    }
+ 
+    public String getName() {
+        return name;
+    }
+ 
+    public void setName(String name) {
+        this.name = name;
+    }
+ 
+    public String getSubject() {
+        return subject;
+    }
+ 
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+ 
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", subject='" + subject + '\'' +
+                '}';
+    }
+}
+
+
+4. Main class is as follows:
+
+@SpringBootApplication
+public class DemoApplication {
+
+	public static HashMap<Long,Student> hmStudent;
+	 
+	   public static void main(String[] args) {
+	      hmStudent=new HashMap<Long,Student>();
+	 
+	      Student one=new Student("John","math");
+	      hmStudent.put(new Long(one.getId()),one);
+	 
+	      SpringApplication.run(DemoApplication.class, args);
+	 
+	      Student two=new Student("Jane","history");
+	      hmStudent.put(new Long(two.getId()),two);
+	   }
+}
+
+
+5. @RequestMapping
+
+Create a StudentService class, annotate that using @RestController and @RequestMapping. 
+Set the value for @RequestMapping to /rest/student, this will enforce to have all the services under StudentService class to have this as parent path. 
+Next create a function named getAllStudents() and set the value for the @RequestMapping to /.
+
+
+@RestController
+@RequestMapping(value="/rest/student")
+class StudentService{
+ 
+   @RequestMapping(value="/",method = RequestMethod.GET)
+   public HashMap<Long,Student> getAllStudents(){
+      return Application.hmStudent;
+   }
+}
+
+
+6. @RequestParam
+We will try out different ways of sending data from the Browser to the Server. We will first use request parameter to send the data. Our URL would look like this.
+
+http://localhost:8080/rest/student/add?name=Joe&subject=english
+
+We are using @RequestParam annotation here, if you set a defaultValue it will also make the parameter optional. By default everything is mandatory. You can also set the required=false if needed.
+
+@RequestMapping(value="/add",method = RequestMethod.POST)
+public Student addStudent(@RequestParam(value="name") String name
+      ,@RequestParam(value="subject",defaultValue = "unknown") String subject){
+ 
+   Student student=new Student(name,subject);
+   Application.hmStudent.put(new Long(student.getId()),student);
+   return student;
+ 
+}
+
+
+
+7.@RequestBody
+
+Now lets update the Students. This time we will pass the JSON Student object, Spring will use Jackson to map that to our Student class automatically. We need to use @RequestBody for this.
+
+@RequestMapping(value="/update",method = RequestMethod.PUT)
+public Student updateStudent(@RequestBody Student student) throws Exception {
+ 
+   if(Application.hmStudent.containsKey(new Long(student.getId()))){
+      Application.hmStudent.put(new Long(student.getId()),student);
+   }else{
+      throw new Exception("Student "+student.getId()+" does not exists");
+   }
+ 
+   return student;
+}
+
+8. @PathVariable
+
+Now its time to delete our Student data. This time we will use Path Variable to send the data as part of the URL itself. Spring provides @PathVariable annotation for this. The URL would look like:
+http://localhost:8080/rest/student/delete/1459664087939
+
+
+@RequestMapping(value="/delete/{id}",method = RequestMethod.DELETE)
+public Student deleteStudent(@PathVariable long id) throws Exception {
+ 
+   Student student;
+ 
+   if(Application.hmStudent.containsKey(new Long(id))){
+      student=Application.hmStudent.get(new Long(id));
+      Application.hmStudent.remove(new Long(id));
+   }else{
+      throw new Exception("Student "+id+" does not exists");
+   }
+   return student;
+}
+
+
+
+Spring Boot Actuator:
+==============================
+
+Actuator is a very helpful library which provides runtime details of our application. To start with, we can find whether our App and all of its components (Like DB, Cache, MQ etc) are up or down. It also shows all the services available for an application. Additionally all properties, including server details, dump and many other details are easily available is your browser using Actuator.
+In case you missed, here is the dependency details to be included in the pom.xml file.
+
+XHTML
+
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-actuator</artifactId>
+	<version>1.3.3.RELEASE</version>
+</dependency>
+
+Application Health:
+-----------------------
+We have already added actuator in out spring boot application, so just access 
+http://localhost:8080/health
+http://localhost:8080/mappings
+
+
+

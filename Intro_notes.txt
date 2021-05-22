@@ -9,7 +9,7 @@ Spring Boot Components:
 What Spring Boot brings to the table ?
 
 Convention over configuration:
-  Spring Boot has taken away all the XML based configurations and provided Annotations for using the Spring Framework. 
+  Spring Boot has taken away all the XML based configurations and provided Annotations for using the Spring Framework.
 Standardization for Microservices:
   A common platform and library support
   Reduced setup, configuration time in development environment.
@@ -17,3 +17,4 @@ Standardization for Microservices:
 Integrated Server for Development:
   Spring Boot attaches a Tomcat/Jetty server with the compiled Jar using Maven/Gradle.
 
+cat file_name | grep '201707'

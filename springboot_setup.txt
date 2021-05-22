@@ -24,7 +24,7 @@ Create Spring Boot Application using Eclipse:
 - Create a New -> Spring Starter Project.
 - Fill the details and click “next”
 - Select Web and Actuator. Click on Next.
-- Click “Finish”
+- Click “Finish”	
 
 Run Spring Boot Application in Eclipse:
 -----------------------------------------------

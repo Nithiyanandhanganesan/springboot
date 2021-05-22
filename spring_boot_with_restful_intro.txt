@@ -20,7 +20,8 @@ public class Application {
 }
 
 3. Let’s create a Student Application where we can add/delete/view student data. We will use static variable to hold the data for our application.
-  We will start by creating a Student class, then we will create a StudentService class and expose the methods there as REST service.
+  We will start by creating a Student class, then we will create a StudentService class and expose the methods there as REST service. Below is
+  class should go inside model/domain package.
 
 public class Student {
     private long id;
@@ -165,6 +166,31 @@ public Student deleteStudent(@PathVariable long id) throws Exception {
    return student;
 }
 
+
+9. @Service
+
+Creates the service class. All class having @Service annotation, will get instanstiated if we called it in controller class.
+Use @Autowired  in the controller class, so that service class get instanstiated in the controller.
+eg:
+@Autowired
+private TestSerive testService;
+
+
+10. application.properties:
+  - It's one of the common way to place the configuration in the application.properties file.
+  - create the application.properties file under resources folder.
+  - Eg: server.port=8080
+  - to see all the values that we can put in application.properties file, look for "Common application properties springboot" in google.
+
+11. Connection to database (@Entity)
+  - To connect to the database we need to add "JPA" to the dependencies while creating projects.
+  - We need to map pojo/bean class to the database object.
+  - @Entity annotation is used to map the pojo to the database.
+  - @Id annonation is used to mention which columns is primary key.
+  - Create an interface to connect to the database.
+      public interface topicRepository extends CrudRepository<Topic,String>{
+
+      }
 
 
 Spring Boot Actuator:

@@ -1,0 +1,15 @@
+Hibernate:
+
+  - maps the java object into table entity column.
+
+Install Hibernate:
+  -  download the hiberate jar and extract.
+  -  inside lib folder, required & jpa are the two important folder.
+  -  import hibernate.jar & jars present in the required and jpa folder.
+
+Steps:
+   - hibernate jdbc database config - achieve using hibernate config
+   - model object - achieve through annotations
+   - service method to create the model object - use to hiberate api.
+   - database design - not needed.
+   - dao method save object using sql queries - not needed.

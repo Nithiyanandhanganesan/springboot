@@ -1,0 +1,45 @@
+Dependency:
+ spring-boot-starter-cache
+
+ -> caching will be key=-value
+
+
+-> @EnableCaching -> main class add this annotation
+-> In serviceimpl class,
+   @Cacheable(cacheNames="books" , key="#id")
+   public void getBook(long id){
+   }
+-> @CachePut(CacheNames="books",key="#book.id")
+   public  Book updateBook(Book book){
+
+   }
+-> @CacheEvict(cacheNames="books",key"=#id")  ---> delete the cache.
+
+->
+
+
+EHCache:
+=========
+
+-> widely used cache system, open source.
+-> Cache hit:
+      - if value found in cache, then its called as cache hit
+-> cache miss:
+      - if value not found in cache, then its called as cache miss
+-> system of record
+      - source of truth(DB in ideal scenario). it tell from where data is coming from
+
+
+Types of caching strategy:
+============================
+
+- standalone
+- distributed
+- replicated
+
+Storage tiers:
+==================
+
+- memory
+- offheap store
+- disk store

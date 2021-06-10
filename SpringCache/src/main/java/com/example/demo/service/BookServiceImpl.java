@@ -71,7 +71,7 @@ public class BookServiceImpl {
         Book bok = new Book();
         bok.setId(25);
         cache.put(new Element(25,bok));
-//5. Get element from cache
+        //5. Get element from cache
         //Element ele = cache.get(1);
         Map<Object, Element> ele =  cache.getAll(cache.getKeys());
 

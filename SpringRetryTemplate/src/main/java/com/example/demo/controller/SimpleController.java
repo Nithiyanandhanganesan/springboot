@@ -21,4 +21,14 @@ public class SimpleController {
     public String checkStatus(@RequestParam(name = "tid") String trackNumber){
         return bookService.checkStatus(trackNumber);
     }
+
+    @GetMapping("/check1")
+    public String checkStatus1(@RequestParam(name = "tid") String trackNumber) {
+        try {
+            return bookService.checkStatus1(trackNumber);
+        } catch(Exception e){
+            System.out.println("cat bock");
+            return "test";
+        }
+    }
 }

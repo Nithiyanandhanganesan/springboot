@@ -21,6 +21,7 @@ public class BookServiceImpl {
 
     private static final Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
 
+    public static int test = 0;
     @Retryable(value = HttpStatusCodeException.class,maxAttempts = 3,
             backoff = @Backoff(3000),exclude = HttpClientErrorException.class)
     public String checkStatus(String trackingNumber){
@@ -33,6 +34,20 @@ public class BookServiceImpl {
     @Recover
     public String recover(){
         return "Please try after some Time!!";
+    }
+
+    @Retryable(value = Exception.class,maxAttempts = 3,
+            backoff = @Backoff(3000))
+    public String checkStatus1(String trackingNumber) throws Exception{
+
+            System.out.println("calling another service to get status:"+  ++test);
+            if(test==3){
+                return "working";
+            }
+            throw new Exception("test");
+
+
+        // return "approved";
     }
 
 }
